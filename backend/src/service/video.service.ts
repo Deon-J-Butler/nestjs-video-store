@@ -16,6 +16,7 @@ export class VideoService {
     @InjectModel(Video.name) private videoModel: Model<VideoDocument>,
   ) {}
 
+  // eslint-disable-next-line @typescript-eslint/ban-types
   async createVideo(video: Object): Promise<Video> {
     const newVideo = new this.videoModel(video);
     return newVideo.save();
@@ -64,5 +65,13 @@ export class VideoService {
       console.error(e);
       throw new ServiceUnavailableException();
     }
+  }
+
+  async update(id, video: Video): Promise<Video> {
+    return await this.videoModel.findByIdAndUpdate(id, video);
+  }
+
+  async delete(id): Promise<any> {
+    return await this.videoModel.findByIdAndDelete(id);
   }
 }

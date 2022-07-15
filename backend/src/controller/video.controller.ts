@@ -13,15 +13,9 @@ import {
   Res,
   Query,
 } from '@nestjs/common';
-import {
-  FileFieldsInterceptor,
-  FilesInterceptor,
-} from '@nestjs/platform-express';
-import { response } from 'express';
-import { request } from 'http';
-import { Expression } from 'mongoose';
+import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { Video } from '../model/video.schema';
-import { VideoService } from '../video.service';
+import { VideoService } from '../service/video.service';
 
 @Controller('api/v/video')
 export class VideoController {
@@ -44,6 +38,8 @@ export class VideoController {
       createdBy: request.user,
       title: video.title,
       video: files.video[0].filename,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      //@ts-ignore
       coverImage: files.cover[0].filename,
     };
     const newVideo = await this.videoService.createVideo(requestBody);
